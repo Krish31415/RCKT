@@ -20,6 +20,7 @@ app = Flask(__name__)
 jwt = JWTManager(app)
 CORS(app)
 
+
 def my_convert(o):
     if isinstance(o, ObjectId):
         return str(o)
@@ -35,6 +36,8 @@ client = MongoClient(
 db = client.website
 
 app.config['SESSION_MONGODB'] = client
+
+
 # Session(app)
 
 
@@ -120,7 +123,6 @@ def home():
 @app.route('/about_us')
 def about_me():
     return render_template('About us.html')
-
 
 
 @app.route('/minesweeper')
