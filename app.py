@@ -32,10 +32,10 @@ app.permament_session_lifetime = timedelta(minutes=2)
 app.session_type = 'mongodb'
 app.secret_key = os.environ['FLASK_KEY']
 
-uri = "mongodb+srv://krish:krishkalra@cluster0.zgr19.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+uri = "mongodb+srv://krish:krishkalra@wasteland.k31bswk.mongodb.net/?retryWrites=true&w=majority&appName=Wasteland"
 # Create a new client and connect to the server
 client = MongoClient(uri, tlsCAFile=certifi.where())
-db = client.website
+db = client.wasteland
 
 app.config['SESSION_MONGODB'] = client
 
@@ -125,6 +125,10 @@ def home():
 @app.route('/about_us')
 def about_us():
     return render_template('about us.html')
+
+@app.route('/poster')
+def poster():
+    return render_template('poster.html')
 
 
 @app.route('/minesweeper')
