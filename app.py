@@ -6,7 +6,6 @@ from pymongo import MongoClient
 from bson.objectid import ObjectId
 from passlib.hash import sha256_crypt
 from flask_session import Session
-from nasapy import Nasa
 from dotenv import load_dotenv
 import random, functools, re, ssl, os
 from flask_cors import CORS
@@ -20,7 +19,6 @@ app = Flask(__name__)
 
 jwt = JWTManager(app)
 CORS(app)
-
 
 def my_convert(o):
     if isinstance(o, ObjectId):
@@ -38,9 +36,6 @@ db = client.website
 
 app.config['SESSION_MONGODB'] = client
 # Session(app)
-
-# Setup nasa
-nasa = Nasa(key=os.environ['NASA_KEY'])
 
 
 @app.route('/', methods=['GET', 'POST'])
