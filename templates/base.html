@@ -10,34 +10,108 @@
 		  integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
 	<link href="{{url_for('static', filename='style.css')}}" rel="stylesheet">
-	<title>Trash Hero</title>
+	<title>Green Bubble</title>
+	<style>
+        .navbar {
+            background: none;
+        }
+        .navbar-brand {
+            margin-left: 1rem;
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: white;
+        }
+        .nav-link {
+            color: white;
+            margin-right: 2rem;
+            padding: 0.5rem 1rem;
+        }
+        .nav-link:hover {
+            color: #b7b7b7;
+        }
+        .btn-signup {
+            background-color: rgb(111, 255, 0);
+            color: #333;
+            border-radius: 20px;
+            margin-top: 0.1rem;
+            padding: 0.4rem 2rem;
+        }
+        .btn-signup:hover{
+            color: white;
+            background-color: black;
+        }
+        .btn-login {
+            background-color: #f8f9fa;
+            color: #333;
+            border-radius: 20px;
+            margin-top: 0.1rem;
+            padding: 0.4rem 2rem;
+        }
+        .btn-login:hover{
+            color: white;
+            background-color: black;
+        }
+        .intro-section {
+            text-align: center;
+            padding-top: 11.5%;
+        }
+        .intro-section h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+        .intro-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        .btn-main {
+            background-color: rgb(111, 255, 0);
+            color: #333;
+            border-radius: 30px;
+            padding: 0.75rem 3rem;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+        .btn-main:hover {
+            background-color: rgb(255, 255, 255);
+            color: rgb(111, 255, 0);
+            border-radius: 30px;
+            padding: 0.75rem 3rem;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+    </style>
 
 	{% block head %}
 	{% endblock %}
 
 </head>
 <body class="bg-dark">
-<nav class="navbar navbar-expand-lg navbar-secondary bg-dark border-bottom fixed-top">
+<nav class="navbar navbar-expand-lg">
 	<div class="container-fluid">
-		<a class="navbar-brand text-white" href="{{ url_for('home') }}">My Site!</a>
-		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-				aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+		<a class="navbar-brand" href="{{url_for('home')}}">TRASH HERO</a>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav ms-auto">
 				<li class="nav-item">
-					<a class="nav-link text-white" href="{{ url_for('about_us') }}">About us</a>
+					<a class="nav-link" href="{{url_for('poster')}}">Find spots</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link text-white" href="{{ url_for('poster') }}">Map</a>
+					<a class="nav-link" href="./poster.html">Submit a spot</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="./chat.html">Connect</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link btn-login" href="{{url_for('login')}}">LOGIN</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link btn-signup" href="{{url_for('login')}}">SIGNUP</a>
 				</li>
 			</ul>
-			<a class="btn btn-danger" href="{{url_for('logout')}}">Logout</a>
 		</div>
 	</div>
 </nav>
-<br><br><br>
 {% block content %}
 {% endblock %}
 
