@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container-fluid bg-secondary vh-100">
+	<div class="container bg-dark p-5 mb-3 rounded-2">
+		<h1 class="text-white text-center">Guess the words!</h1>
+	</div>
+	<a href="{{url_for('jumbled_words_menu')}}" class="text-white">GO BACK</a>
+	<form class="form" method="POST">
+		<div class="d-grid gap-2 col-1 mx-auto">
+			{% for word in session['words'] %}
+			<div class="card bg-info" style="width: 18rem;">
+				<div class="card-body">
+					<p class="card-text text-center">{{word}}</p>
+					<input type="text" class="form-control" name="word{{loop.index-1}}">
+				</div>
+			</div>
+			{% endfor %}
+			<button type="submit" class="btn btn-primary btn-sm"><strong>SUBMIT</strong></button>
+		</div>
+	</form>
+</div>
+{% endblock %}

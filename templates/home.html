@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+	<div class="row py-4 text-white">
+		<h1 class="text-center">Welcome to my Portfolio {{session['first name']}}!</h1>
+		<p class="text-center">Note: This is a work in progress</p>
+	</div>
+
+	<div class="row row-cols-1 g-4">
+
+		<div class="col">
+			<div class="card mx-auto" style="width: 18rem;">
+				<div class="card-body">
+					<h4 class="card-title">Minesweeper</h4>
+					<p class="card-text">I recreated minesweeper on my own for my AP CS P Create task.</p>
+					<a href="{{url_for('minesweeper')}}" class="btn btn-primary">Link</a>
+				</div>
+			</div>
+		</div>
+		<div class="col">
+			<div class="card mx-auto" style="width: 18rem;">
+				<div class="card-body">
+					<h4 class="card-title">Jumbled words</h4>
+					<p class="card-text">This is a basic game where words are scrambled, and you have to unscramble
+						them.</p>
+					<a href="{{url_for('jumbled_words_menu')}}" class="btn btn-primary">Link</a>
+				</div>
+			</div>
+		</div>
+		<div class="col">
+			<div class="card mx-auto" style="width: 18rem;">
+				<div class="card-body">
+					<h4 class="card-title">Images from Mars rover</h4>
+					<p class="card-text">Select a date and see pictures the Mars rover took on that day. Images are
+						directly sourced from nasa</p>
+					<a href="{{url_for('NASA')}}" class="btn btn-primary">Link</a>
+				</div>
+			</div>
+		</div>
+		<div class="col">
+			<div class="card mx-auto" style="width: 18rem;">
+				<div class="card-body">
+					<h4 class="card-title">Contact Manager</h4>
+					<p class="card-text">This is a basic contact manager that stores and displays contacts.</p>
+					<a href="{{url_for('contact_manager')}}" class="btn btn-primary">Link</a>
+				</div>
+			</div>
+		</div>
+		<div class="col">
+			<div class="card mx-auto" style="width: 18rem;">
+				<div class="card-body">
+					<h4 class="card-title">Notepad on a website</h4>
+					<p class="card-text">This is a basic notepad that stores and displays notes.</p>
+					<a href="{{url_for('notepad')}}" class="btn btn-primary">Link</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

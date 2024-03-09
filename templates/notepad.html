@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container bg-dark p-5 ">
+    <h1 class="text-white text-center">My Notes!</h1>
+    <p class="text-white text-center">Note: A maximum of 10 notes per account will be stored. Notes are private to the logged in acount.</p>
+</div>
+<div class="container bg-light p-2 rounded-2">
+    <form class="form" method="POST">
+        <div class="mb-3">
+            <label for="note" class="form-label"><strong>NEW NOTE :</strong></label>
+            <textarea class="form-control" id="note" rows="3" name="new note"></textarea>
+        </div>
+        <button type="submit" class="btn btn-sm btn-primary mb-3"><strong>SUBMIT</strong></button>
+    </form>
+</div>
+<br>
+<div class="container p-0 rounded-2">
+    <h5 class="text-white">Notes:</h5>
+    {% for note in notes %}
+    <div class="card bg-light mb-3">
+        <div class="card-header text-end">
+            <form method="POST">
+                <a class="btn btn-sm btn-danger" href="/delete_note/{{note['_id']}}">
+                    <strong>X</strong>
+                </a>
+            </form>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">{{note['text']}}</h5>
+        </div>
+        <div class="card-footer bg-transparent">Posted at: {{note['utc_time']}}</div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

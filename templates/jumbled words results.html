@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container-fluid bg-secondary vh-100">
+	<div class="container bg-dark p-5 mb-3 rounded-2">
+		<h1 class="text-white text-center">Results:</h1>
+	</div>
+	<div class="d-grid col-8 mx-auto">
+		<table class="table table-info">
+			<thead>
+			<tr>
+				<th scope="col">#</th>
+				<th scope="col">User Answer</th>
+				<th scope="col">Correct Answer</th>
+			</tr>
+			</thead>
+			<tbody>
+			{% for a in range(5) %}
+			<tr>
+				<th scope="row">{{a+1}}</th>
+				<td class="text-{{'success' if session['words'][a]==session['answers'][a] else 'danger'}}">
+					{{session['words'][a]}}
+				</td>
+				<td>{{session['answers'][a]}}</td>
+			</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	<div class="d-grid gap-2 col-1 mx-auto">
+		<a href="{{url_for('jumbled_words_menu')}}" class="btn btn-danger">Home</a>
+		<a href="{{url_for('jumbled_words')}}" class="btn btn-danger text-right">Play again</a>
+	</div>
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="d-flex flex-row-reverse justify-content-center">
+	<div class="card text-center mt-2" style="width: 20rem;">
+		{% with messages = get_flashed_messages() %}
+		{% if messages %}
+		{% for message in messages %}
+		<div class="alert alert-warning alert-dismissible fade show" role="alert">
+			{{message}}
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+		{% endfor %}
+		{% endif %}
+		{% endwith %}
+		<div class="card-body">
+			<h2 class="card-title pb-3"><strong>Login</strong></h2>
+			<form method="POST">
+				<input type="text" name="email" class="form-control" placeholder="Email" required>
+				<input type="password" name="password" class="form-control my-3" placeholder="Password" required>
+				<button type="submit" class="btn btn-primary" name="login">Login</button>
+			</form>
+			<hr>
+			<p><strong>Don't have an account?</strong></p>
+			<!-- Button trigger modal -->
+			<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#signUpModal">
+				Sign up
+			</button>
+
+			<!-- Modal -->
+			<div class="modal fade" id="signUpModal" tabindex="-1" aria-labelledby="signUpModal"
+				 aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">Register</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<form method="POST">
+							<div class="modal-body">
+								<input type="text" name="first name" class="form-control" placeholder="First Name" required>
+								<input type="text" name="last name" class="form-control my-3" placeholder="Last Name" required>
+								<input type="text" name="email" class="form-control" placeholder="Email" required>
+								<input type="password" name="password" class="form-control my-3" placeholder="Password" required>
+							</div>
+							<div class="modal-footer">
+								<button type="submit" class="btn btn-primary" name="sign up">Sign up</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
