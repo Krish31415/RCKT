@@ -1,5 +1,6 @@
 import json
 
+import certifi
 from flask import Flask, render_template, redirect, url_for, request, flash, session, jsonify
 from datetime import datetime, timedelta, date, timezone
 from pymongo import MongoClient
@@ -10,6 +11,7 @@ from dotenv import load_dotenv
 import random, functools, re, ssl, os
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, JWTManager
+from pymongo.server_api import ServerApi
 
 APP_ROOT = os.path.join(os.path.dirname(__file__), '.')
 dotenv_path = os.path.join(APP_ROOT, '.env')
@@ -30,9 +32,9 @@ app.permament_session_lifetime = timedelta(minutes=2)
 app.session_type = 'mongodb'
 app.secret_key = os.environ['FLASK_KEY']
 
-client = MongoClient(
-    "mongodb+srv://krish:krishkalra@cluster0.zgr19.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
-    ssl=True)
+uri = "mongodb+srv://krish:krishkalra@cluster0.zgr19.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+# Create a new client and connect to the server
+client = MongoClient(uri, tlsCAFile=certifi.where())
 db = client.website
 
 app.config['SESSION_MONGODB'] = client
