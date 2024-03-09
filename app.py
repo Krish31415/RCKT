@@ -121,8 +121,8 @@ def home():
 
 
 @app.route('/about_us')
-def about_me():
-    return render_template('About us.html')
+def about_us():
+    return render_template('about us.html')
 
 
 @app.route('/minesweeper')
