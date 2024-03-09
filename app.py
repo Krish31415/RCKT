@@ -31,8 +31,8 @@ app.session_type = 'mongodb'
 app.secret_key = os.environ['FLASK_KEY']
 
 client = MongoClient(
-    "mongodb+srv://krish:krishkalra@cluster0.zgr19.mongodb.net/myFirstDatabase?retryWrites=true&w=majority", ssl=True,
-    ssl_cert_reqs=ssl.CERT_NONE)
+    "mongodb+srv://krish:krishkalra@cluster0.zgr19.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+    ssl=True)
 db = client.website
 
 app.config['SESSION_MONGODB'] = client
