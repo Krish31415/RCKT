@@ -101,10 +101,10 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="./account.html">Home</a>
+                        <a class="nav-link" href="{{url_for('home')}}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./poster.html">Submit spots</a>
+                        <a class="nav-link" href="{{url_for('poster')}}">Submit spots</a>
                     </li>
                 </ul>
             </div>
@@ -119,8 +119,13 @@
     <script>
       let map;
 
-      // placeholder of locations - push the dataset values here
-      const markedLocations = {{reports}};
+      const markedLocations = [
+        {% for report in reports %}
+        {'lat' : {{ report['lat'] }},
+        'lng' : {{ report['lng'] }},
+        'caption' : "{{ report['description'] }}"},
+        {% endfor %}
+      ]
 
       function initMap() {
         if (navigator.geolocation) {
@@ -229,7 +234,7 @@
                   position: { lat: location.lat, lng: location.lng },
                   map: map,
                   title: location.caption,
-                  icon: "./pin.png",
+                  icon: "{{url_for('static',filename='pin.png')}}",
                 });
 
                 marker.addListener("click", () => {

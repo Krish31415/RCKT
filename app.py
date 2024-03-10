@@ -32,7 +32,7 @@ app.permament_session_lifetime = timedelta(minutes=2)
 app.session_type = 'mongodb'
 app.secret_key = os.environ['FLASK_KEY']
 
-uri = "mongodb+srv://krish:krishkalra@wasteland.k31bswk.mongodb.net/?retryWrites=true&w=majority&appName=Wasteland"
+uri = os.environ['MONGODB_URI']
 # Create a new client and connect to the server
 client = MongoClient(uri, tlsCAFile=certifi.where())
 db = client.wasteland
@@ -141,11 +141,12 @@ def poster():
 
         post_data['user email'] = session['email']
 
+        pos = post_data['pos'].split(', ')
+        post_data['lat'] = float(pos[0][1:])
+        post_data['lng'] = float(pos[1][:-1])
+        del post_data['pos']
         db.reports.insert_one(post_data)
-        # db.reports.update(
-        #     {'email': session['email']},
-        #     { '$inc': {'karma points': -2}}
-        # )
+
 
         return redirect(url_for('home'))
 

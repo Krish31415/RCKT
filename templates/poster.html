@@ -116,10 +116,10 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="./account.html">Home</a>
+                        <a class="nav-link" href="{{url_for('home')}}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./receiver.html">Find spots</a>
+                        <a class="nav-link" href="{{url_for('receiver')}}">Find spots</a>
                     </li>
                 </ul>
             </div>
@@ -250,7 +250,7 @@
             currentMarker = new google.maps.Marker({
                 position: location,
                 map: map,
-                icon: './pin.png'
+                icon: '{{url_for('static',filename='pin.png')}}'
             });
 
             documentLocation(location);
