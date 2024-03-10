@@ -69,13 +69,15 @@
 </head>
 <body>
     <div id="map"></div>
-    <div id="sidebar">
-        <h3>Location Details</h3>
-        <p id="locationInfo"></p>
-        <input type="file" id="imageUpload" accept="image/*">
-        <input type="text" id="userText" placeholder="Enter the description" style->
-        <button onclick="confirmLocation()">Confirm Location</button>
-    </div>
+    <form method="POST">
+        <div id="sidebar">
+            <h3>Location Details</h3>
+            <p id="locationInfo"></p>
+            <input type="file" name="image" id="imageUpload" accept="image/*">
+            <input type="text" name="description" id="userText" placeholder="Enter the description" style>
+            <button type="submit" onclick="confirmLocation()">Confirm Location</button>
+        </div>
+    </form>
     <script>
         let currentMarker = null;
 

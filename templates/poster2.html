@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Poster Map</title>
+    <style>
+        #map {
+            height: 100%;
+            width: 100%;
+            float: left;
+            border: 0px;
+        }
+        #sidebar {
+            height: 100%;
+            width: 20%;
+            float: right;
+            padding: 10px;
+            box-sizing: border-box;
+            background-color: #232323;
+            display: none;
+        }
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        h3 {
+            padding-top: 150px;
+            text-align: left;
+            padding-left: 25px;
+            color: white;
+            font-family: sans-serif;
+        }
+        p {
+            text-align: left;
+            padding-left: 25px;
+            color: white;
+            font-family: sans-serif;
+        }
+        button {
+            margin-left: 20px;
+            background-color: rgb(111, 255, 0);
+            color: #333;
+            border-radius: 30px;
+            padding: 0.75rem 3rem;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        body {
+            min-height: 100vh;
+            max-width: 100vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3vmax;
+            box-sizing: border-box;
+            background-color: black;
+        }
+        #imageUpload {
+            margin-left: 25px;
+            color: white;
+        }
+        #userText {
+            margin-bottom: 20px;
+            margin-left: 25px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+        <form id="sidebar">
+            <h3>Location Details</h3>
+            <p id="locationInfo"></p>
+            <input type="file" name="image" id="imageUpload" accept="image/*">
+            <input type="text" name="description" id="userText" placeholder="Enter the description" style>
+            <button type="submit" onclick="confirmLocation()">Confirm Location</button>
+        </form>
+    <script>
+        let currentMarker = null;
+
+        function initMap() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+
+                    const map = new google.maps.Map(document.getElementById("map"), {
+                        center: pos,
+                        zoom: 16,
+                        styles: [
+                            { elementType: "geometry", stylers: [{ color: "#1A2636" }] },
+                            { elementType: "labels.text.stroke", stylers: [{ color: "#242f3e" }] },
+                            { elementType: "labels.text.fill", stylers: [{ color: "#7bff66" }] },
+                            {
+                                featureType: "administrative.locality",
+                                elementType: "labels.text.fill",
+                                stylers: [{ color: "#99eb9d" }],
+                            },
+                            {
+                                featureType: "poi",
+                                elementType: "labels.text.fill",
+                                stylers: [{ color: "#7bff66" }],
+                            },
+                            {
+                                featureType: "poi.park",
+                                elementType: "geometry",
+                                stylers: [{ color: "#263c3f" }],
+                            },
+                            {
+                                featureType: "poi.park",
+                                elementType: "labels.text.fill",
+                                stylers: [{ color: "#a2fdb7" }],
+                            },
+                            {
+                                featureType: "road",
+                                elementType: "geometry",
+                                stylers: [{ color: "#535f4d" }],
+                            },
+                            {
+                                featureType: "road",
+                                elementType: "geometry.stroke",
+                                stylers: [{ color: "#212a37" }],
+                            },
+                            {
+                                featureType: "road",
+                                elementType: "labels.text.fill",
+                                stylers: [{ color: "#9ca5b3" }],
+                            },
+                            {
+                                featureType: "road.highway",
+                                elementType: "geometry",
+                                stylers: [{ color: "#688f53" }],
+                            },
+                            {
+                                featureType: "road.highway",
+                                elementType: "geometry.stroke",
+                                stylers: [{ color: "#1f2835" }],
+                            },
+                            {
+                                featureType: "road.highway",
+                                elementType: "labels.text.fill",
+                                stylers: [{ color: "#91ff5f" }],
+                            },
+                            {
+                                featureType: "transit",
+                                elementType: "geometry",
+                                stylers: [{ color: "#2f3948" }],
+                            },
+                            {
+                                featureType: "transit.station",
+                                elementType: "labels.text.fill",
+                                stylers: [{ color: "#5ce58c" }],
+                            },
+                            {
+                                featureType: "water",
+                                elementType: "geometry",
+                                stylers: [{ color: "#07080C" }],
+                            },
+                            {
+                                featureType: "water",
+                                elementType: "labels.text.fill",
+                                stylers: [{ color: "#515c6d" }],
+                            },
+                            {
+                                featureType: "water",
+                                elementType: "labels.text.stroke",
+                                stylers: [{ color: "#07080C" }],
+                            },
+                        ],
+                    });
+
+                    map.addListener('click', function(e) {
+                        placeMarker(e.latLng, map);
+                    });
+
+                }, function() {
+                    handleLocationError(true, map.getCenter());
+                });
+            } else {
+                handleLocationError(false, map.getCenter());
+            }
+        }
+        function placeMarker(location, map) {
+            if (currentMarker) {
+                currentMarker.setMap(null);
+            }
+            currentMarker = new google.maps.Marker({
+                position: location,
+                map: map,
+                icon: './pin.png'
+            });
+
+            documentLocation(location);
+            updateSidebar(location);
+        }
+
+        function documentLocation(location) {
+            console.log(`Latitude: ${location.lat()}, Longitude: ${location.lng()}`);
+        }
+
+        function updateSidebar(location) {
+            document.getElementById('locationInfo').textContent = `Latitude: ${location.lat()}, Longitude: ${location.lng()}`;
+            document.getElementById('sidebar').style.display = 'block';
+            document.getElementById('map').style.width = '80%';
+        }
+
+        function confirmLocation() {
+            var pos_d = currentMarker.getPosition().toString()
+            var image_d = document.getElementById('imageUpload').files[0];
+            var userText_d = document.getElementById('userText').value;
+            console.log(pos_d, image_d, userText_d);
+            // database storage here
+            alert('Location confirmed!');
+        }
+
+        function handleLocationError(browserHasGeolocation, pos) {
+            console.error(browserHasGeolocation ?
+                'Error: The Geolocation service failed.' :
+                'Error: Your browser doesn\'t support geolocation.');
+        }
+
+        window.initMap = initMap;
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCuys5rRtnQNo3_YUCqb6g6vOhigb1J53s&callback=initMap">
+    </script>
+</body>
+</html>

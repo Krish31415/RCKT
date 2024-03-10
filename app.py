@@ -128,9 +128,26 @@ def home():
 def about_us():
     return render_template('about us.html')
 
-@app.route('/poster')
+# POSTER
+@app.route('/poster', methods=['GET','POST'])
 def poster():
-    return render_template('poster.html')
+    if request.method == 'GET':
+        return render_template('poster2.html')
+
+    if request.method == 'POST':
+        post_data = request.form.to_dict(flat=True)
+        if not session['email']:
+            flash('You must be logged in to submit a post.')
+            return redirect(url_for('poster'))
+
+        post_data['user email'] = session['email']
+
+        db.reports.insert_one(post_data)
+        db.users.
+
+        return redirect(url_for('home'))
+
+
 
 
 @app.route('/minesweeper')
