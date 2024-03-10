@@ -128,26 +128,37 @@ def home():
 def about_us():
     return render_template('about us.html')
 
-# POSTER
-@app.route('/poster', methods=['GET','POST'])
-def poster():
-    if request.method == 'GET':
-        return render_template('poster2.html')
 
+# POSTER
+@app.route('/poster', methods=['GET', 'POST'])
+def poster():
     if request.method == 'POST':
+        print('recieved data')
         post_data = request.form.to_dict(flat=True)
         if not session['email']:
             flash('You must be logged in to submit a post.')
-            return redirect(url_for('poster'))
+            # return redirect(url_for('poster'))
 
         post_data['user email'] = session['email']
 
         db.reports.insert_one(post_data)
-        # db.users.
+        # db.reports.update(
+        #     {'email': session['email']},
+        #     { '$inc': {'karma points': -2}}
+        # )
 
         return redirect(url_for('home'))
 
+    if request.method == 'GET':
+        return render_template('poster.html')
 
+
+
+
+@app.route('/reciever')
+def reciever():
+    reports = db.reports.find()
+    return render_template('reciever.html', reports=reports)
 
 
 @app.route('/minesweeper')
@@ -172,35 +183,6 @@ def users():
                 return jsonify({'message': 'Password is incorrect'}), 401
         else:
             return jsonify({'message': 'Email not found'}), 401
-
-
-@app.route('/admin/storage', methods=['POST'])
-def storage():
-    if request.method == 'POST':
-        post_data = request.get_json()
-        print(post_data)
-
-        if post_data['type'] == 'getEntries':
-            del post_data['type']
-            entries = list(db.to_do_entries.find(post_data))
-            print(entries)
-            return json.loads(json.dumps({'entries': entries}, default=my_convert)), 200
-        if post_data['type'] == 'addEntry':
-            db.to_do_entries.insert_one(post_data['entry'])
-            return jsonify({'message': 'Success'}), 200
-        if post_data['type'] == 'updateStatus':
-            db.to_do_entries.update_one({'_id': ObjectId(post_data['id']), 'user': post_data['user']},
-                                        {'$set': {'status': post_data['status']}})
-            return jsonify({'message': 'Success'}), 200
-        if post_data['type'] == 'addList':
-            _id = db.to_do_lists.insert_one(post_data['entry']).inserted_id
-            return json.loads(json.dumps({'message': 'Success', '_id': _id}, default=my_convert)), 200
-        if post_data['type'] == 'getLists':
-            del post_data['type']
-            entries = list(db.to_do_lists.find(post_data))
-            print(entries)
-            return json.loads(json.dumps({'entries': entries}, default=my_convert)), 200
-
 
 if __name__ == '__main__':
     app.run(debug=True)
