@@ -143,7 +143,7 @@ def poster():
         post_data['user email'] = session['email']
 
         db.reports.insert_one(post_data)
-        db.users.
+        # db.users.
 
         return redirect(url_for('home'))
 

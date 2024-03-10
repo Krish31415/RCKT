@@ -76,9 +76,7 @@
         <input type="text" id="userText" placeholder="Enter the description" style->
         <button onclick="confirmLocation()">Confirm Location</button>
 
-        <input type="hidden" id="pos_d" name="pos_d">
-        <input type="hidden" id="image_d" name="image_d">
-        <input type="hidden" id="userText_d" name="userText_d">
+        <input type="hidden" id="pos_d" name="pos">
     </form>
     <script>
         let currentMarker = null;
@@ -194,7 +192,7 @@
             currentMarker = new google.maps.Marker({
                 position: location,
                 map: map,
-                icon: './pin.png'
+                icon: '{{ url_for(static,'pin.png') }}'
             });
 
             documentLocation(location);
