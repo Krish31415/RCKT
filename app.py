@@ -153,11 +153,10 @@ def poster():
         return render_template('poster.html')
 
 
-
-
 @app.route('/receiver')
 def receiver():
-    reports = db.reports.find()
+    reports = list(db.reports.find())
+    print(reports)
     return render_template('receiver.html', reports=reports)
 
 
@@ -183,6 +182,7 @@ def users():
                 return jsonify({'message': 'Password is incorrect'}), 401
         else:
             return jsonify({'message': 'Email not found'}), 401
+
 
 if __name__ == '__main__':
     app.run(debug=True)
