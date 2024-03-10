@@ -155,10 +155,10 @@ def poster():
 
 
 
-@app.route('/reciever')
-def reciever():
+@app.route('/receiver')
+def receiver():
     reports = db.reports.find()
-    return render_template('reciever.html', reports=reports)
+    return render_template('receiver.html', reports=reports)
 
 
 @app.route('/minesweeper')
