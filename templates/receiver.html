@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Poster Map</title>
+    <style>
+      #map {
+        height: 100%;
+        width: 100%;
+        float: left;
+        border: 0px;
+      }
+      #sidebar {
+        height: 100%;
+        width: 20%;
+        float: right;
+        padding: 10px;
+        box-sizing: border-box;
+        background-color: #232323;
+        display: none;
+      }
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      h3 {
+        padding-top: 150px;
+        text-align: left;
+        padding-left: 25px;
+        color: white;
+        font-family: sans-serif;
+      }
+      p {
+        text-align: left;
+        padding-left: 25px;
+        color: white;
+        font-family: sans-serif;
+      }
+      button {
+        display: none; /* Hide the button as it's not needed for this version */
+      }
+      body {
+        min-height: 100vh;
+        max-width: 100vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 3vmax;
+        box-sizing: border-box;
+        background-color: black;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <div id="sidebar">
+      <h3>Location Details</h3>
+      <p id="locationInfo">Locations marked by users are shown on the map.</p>
+    </div>
+    <script>
+      let map;
+
+      // placeholder of locations - push the dataset values here
+      const markedLocations = [
+        { lat: -34.397, lng: 150.644, caption: "Marked Location 1" },
+        { lat: -34.39, lng: 150.65, caption: "Marked Location 2" },
+      ];
+
+      function initMap() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            function (position) {
+              const pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude,
+              };
+
+              map = new google.maps.Map(document.getElementById("map"), {
+                center: pos,
+                zoom: 16,
+                styles: [
+                  { elementType: "geometry", stylers: [{ color: "#1A2636" }] },
+                  {
+                    elementType: "labels.text.stroke",
+                    stylers: [{ color: "#242f3e" }],
+                  },
+                  {
+                    elementType: "labels.text.fill",
+                    stylers: [{ color: "#7bff66" }],
+                  },
+                  {
+                    featureType: "administrative.locality",
+                    elementType: "labels.text.fill",
+                    stylers: [{ color: "#99eb9d" }],
+                  },
+                  {
+                    featureType: "poi",
+                    elementType: "labels.text.fill",
+                    stylers: [{ color: "#7bff66" }],
+                  },
+                  {
+                    featureType: "poi.park",
+                    elementType: "geometry",
+                    stylers: [{ color: "#263c3f" }],
+                  },
+                  {
+                    featureType: "poi.park",
+                    elementType: "labels.text.fill",
+                    stylers: [{ color: "#a2fdb7" }],
+                  },
+                  {
+                    featureType: "road",
+                    elementType: "geometry",
+                    stylers: [{ color: "#535f4d" }],
+                  },
+                  {
+                    featureType: "road",
+                    elementType: "geometry.stroke",
+                    stylers: [{ color: "#212a37" }],
+                  },
+                  {
+                    featureType: "road",
+                    elementType: "labels.text.fill",
+                    stylers: [{ color: "#9ca5b3" }],
+                  },
+                  {
+                    featureType: "road.highway",
+                    elementType: "geometry",
+                    stylers: [{ color: "#688f53" }],
+                  },
+                  {
+                    featureType: "road.highway",
+                    elementType: "geometry.stroke",
+                    stylers: [{ color: "#1f2835" }],
+                  },
+                  {
+                    featureType: "road.highway",
+                    elementType: "labels.text.fill",
+                    stylers: [{ color: "#91ff5f" }],
+                  },
+                  {
+                    featureType: "transit",
+                    elementType: "geometry",
+                    stylers: [{ color: "#2f3948" }],
+                  },
+                  {
+                    featureType: "transit.station",
+                    elementType: "labels.text.fill",
+                    stylers: [{ color: "#5ce58c" }],
+                  },
+                  {
+                    featureType: "water",
+                    elementType: "geometry",
+                    stylers: [{ color: "#07080C" }],
+                  },
+                  {
+                    featureType: "water",
+                    elementType: "labels.text.fill",
+                    stylers: [{ color: "#515c6d" }],
+                  },
+                  {
+                    featureType: "water",
+                    elementType: "labels.text.stroke",
+                    stylers: [{ color: "#07080C" }],
+                  },
+                ],
+              });
+
+              const infowindow = new google.maps.InfoWindow();
+
+              markedLocations.forEach((location) => {
+                const marker = new google.maps.Marker({
+                  position: { lat: location.lat, lng: location.lng },
+                  map: map,
+                  title: location.caption,
+                  icon: "./pin.png",
+                });
+
+                marker.addListener("click", () => {
+                  infowindow.setContent(location.caption);
+                  infowindow.open(map, marker);
+                });
+              });
+            },
+            function () {
+              handleLocationError(true, map.getCenter());
+            }
+          );
+        } else {
+          handleLocationError(false, map.getCenter());
+        }
+      }
+
+      function handleLocationError(browserHasGeolocation, pos) {
+        console.error(
+          browserHasGeolocation
+            ? "Error: The Geolocation service failed."
+            : "Error: Your browser doesn't support geolocation."
+        );
+      }
+
+      window.initMap = initMap;
+    </script>
+
+    <script
+      async
+      defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCuys5rRtnQNo3_YUCqb6g6vOhigb1J53s&callback=initMap"
+    ></script>
+  </body>
+</html>
