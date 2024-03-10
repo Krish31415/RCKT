@@ -54,6 +54,7 @@ def login():
                     print('success')
                     session['email'] = user['email']
                     session['first name'] = user['first name']
+                    session['karma points'] = user['karma points']
                     session.permament = True
                     return redirect(url_for('home'))
                 else:
@@ -81,6 +82,7 @@ def login():
                 return redirect(url_for('login'))
 
             post_data['password'] = sha256_crypt.hash(post_data['password'])
+            post_data['karma points'] = 0
             db.users.insert_one(post_data)
         else:
             flash('Unknown error')
