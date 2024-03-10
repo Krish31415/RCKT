@@ -98,7 +98,7 @@
             color: white;
             background-color: black;
         }
-        h1 {
+        /* h1 {
             font-size: 75px;
             margin: 0;
             font-weight: bold;
@@ -107,7 +107,7 @@
             font-size: 45px;
             margin: 20px 0 0;
             margin-bottom: 140px;
-        }
+        } */
     </style>
 </head>
 <body>
@@ -130,13 +130,11 @@
     <form method="POST" id="sidebar">
         <h3>Location Details</h3>
         <p id="locationInfo"></p>
-        <input type="file" id="imageUpload" accept="image/*">
-        <input type="text" id="userText" placeholder="Enter the description" style->
+        <input type="file" name="image" id="imageUpload" accept="image/*">
+        <input type="text" name="description" id="userText" placeholder="Enter the description" style->
         <button onclick="confirmLocation()">Confirm Location</button>
 
-        <input type="hidden" id="pos_d" name="pos_d">
-        <input type="hidden" id="image_d" name="image_d">
-        <input type="hidden" id="userText_d" name="userText_d">
+        <input type="hidden" id="pos_d" name="pos">
     </form>
     <script>
         let currentMarker = null;
