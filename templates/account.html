@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            height: 100vh;
+        }
+        .navbar {
+            background: none;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .navbar-brand {
+            margin-left: 1rem;
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: white;
+        }
+        .nav-link {
+            color: white;
+            margin-right: 2rem;
+            padding: 0.5rem 1rem;
+        }
+        .nav-link:hover {
+            color: #b7b7b7;
+        }
+        .btn-signup, .btn-login {
+            background-color: rgb(111, 255, 0);
+            color: #333;
+            border-radius: 20px;
+            padding: 0.4rem 2rem;
+        }
+        .btn-signup:hover, .btn-login:hover{
+            color: white;
+            background-color: black;
+        }
+        h1 {
+            font-size: 75px;
+            margin: 0;
+            font-weight: bold;
+        }
+        p {
+            font-size: 45px;
+            margin: 20px 0 0;
+            margin-bottom: 140px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">GREEN BUBBLE</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="./receiver.html">Find spots</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./poster.html">Submit spots</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./chat.html">Connect</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div style="padding-top: 100px; text-align: center;">
+        <h1>Hello, <span id="username">Username</span></h1>
+        <p>Your karma is <span id="karma">...</span></p>
+    </div>
+
+    <script>
+        document.getElementById('username').textContent = 'John Doe';
+        document.getElementById('karma').textContent = '123';
+    </script>
+</body>
+</html>
