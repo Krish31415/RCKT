@@ -54,7 +54,7 @@ def login():
                     print('success')
                     session['email'] = user['email']
                     session['first name'] = user['first name']
-                    session['karma points'] = user['karma points']
+                    session['karma'] = user['karma']
                     session.permament = True
                     return redirect(url_for('home'))
                 else:
@@ -82,7 +82,7 @@ def login():
                 return redirect(url_for('login'))
 
             post_data['password'] = sha256_crypt.hash(post_data['password'])
-            post_data['karma points'] = 0
+            post_data['karma'] = 0
             db.users.insert_one(post_data)
         else:
             flash('Unknown error')
@@ -147,7 +147,6 @@ def poster():
         del post_data['pos']
         db.reports.insert_one(post_data)
 
-
         return redirect(url_for('home'))
 
     if request.method == 'GET':
@@ -159,6 +158,14 @@ def receiver():
     reports = list(db.reports.find())
     print(reports)
     return render_template('receiver.html', reports=reports)
+
+
+@login_required
+@app.route('/dashboard')
+def dashboard():
+    return render_template('dashboard.html',
+                           first_name=session['first name'],
+                           karma=session['karma'])
 
 
 @app.route('/minesweeper')
