@@ -13,7 +13,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 
-	<title>Earth Karma</title>
+	<title>EarthKarma</title>
 	<style>
 		body {
             font-family: 'Montserrat', sans-serif;
@@ -99,8 +99,12 @@
 		<a class="navbar-brand" href="{{url_for('home')}}">EARTHKARMA</a>
 		<div class="collapse navbar-collapse" id="navbarNav">
 			<ul class="navbar-nav ms-auto">
-				<li class="nav-item"></li>
+				<li class="nav-item">
 					<a class="nav-link" href="{{url_for('about_us')}}">About us</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="{{url_for('dashboard')}}">Dashboard</a>
+				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="{{url_for('receiver')}}">Find reports</a>
 				</li>
@@ -108,10 +112,10 @@
 					<a class="nav-link" href="{{url_for('poster')}}">Report pollution</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link btn-login px-3" href="{{url_for('login')}}">LOGIN</a>
+					<a class="nav-link btn-login px-3" href="{{url_for('login')}}">Log in</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link btn-signup px-3" href="{{url_for('login')}}">SIGN UP</a>
+					<a class="nav-link btn-signup px-3" href="{{url_for('login')}}">Sign up</a>
 				</li>
 			</ul>
 		</div>

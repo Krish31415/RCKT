@@ -54,7 +54,6 @@ def login():
                     print('success')
                     session['email'] = user['email']
                     session['first name'] = user['first name']
-                    session['karma'] = user['karma']
                     session.permament = True
                     return redirect(url_for('home'))
                 else:
@@ -147,7 +146,13 @@ def poster():
         del post_data['pos']
         db.reports.insert_one(post_data)
 
-        return redirect(url_for('home'))
+        # Increase the user's karma by 1
+        db.users.update_one(
+            {'email': session['email']},
+            {'$inc': {'karma': 1}}
+        )
+
+        return redirect(url_for('dashboard'))
 
     if request.method == 'GET':
         return render_template('poster.html')
@@ -163,9 +168,10 @@ def receiver():
 @login_required
 @app.route('/dashboard')
 def dashboard():
+    user_karma = db.users.find_one({'email':session['email']})['karma']
     return render_template('dashboard.html',
                            first_name=session['first name'],
-                           karma=session['karma'])
+                           karma=user_karma)
 
 
 @app.route('/minesweeper')
