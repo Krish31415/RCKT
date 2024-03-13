@@ -28,7 +28,7 @@ def my_convert(o):
         return str(o)
 
 
-app.permament_session_lifetime = timedelta(minutes=2)
+app.permanent_session_lifetime = timedelta(minutes=5)
 app.session_type = 'mongodb'
 app.secret_key = os.environ['FLASK_KEY']
 
@@ -38,9 +38,6 @@ client = MongoClient(uri, tlsCAFile=certifi.where())
 db = client.wasteland
 
 app.config['SESSION_MONGODB'] = client
-
-
-# Session(app)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -95,7 +92,7 @@ def login():
 def login_required(func):
     @functools.wraps(func)
     def secure_function(*args, **kwargs):
-        if "email" not in session:
+        if not ("email" in session.keys()):
             session.clear()
             flash('You must log in.')
             return redirect(url_for("login", next=request.path))
@@ -136,7 +133,7 @@ def poster():
         post_data = request.form.to_dict(flat=True)
         if not session['email']:
             flash('You must be logged in to submit a post.')
-            # return redirect(url_for('poster'))
+            return redirect(url_for('login'))
 
         post_data['user email'] = session['email']
 
@@ -165,10 +162,10 @@ def receiver():
     return render_template('receiver.html', reports=reports)
 
 
-@login_required
 @app.route('/dashboard')
+@login_required
 def dashboard():
-    user_karma = db.users.find_one({'email':session['email']})['karma']
+    user_karma = db.users.find_one({'email': session['email']})['karma']
     return render_template('dashboard.html',
                            first_name=session['first name'],
                            karma=user_karma)
@@ -179,7 +176,6 @@ def minesweeper():
     return render_template('minesweeper.html')
 
 
-@login_required
 @app.route('/admin/users', methods=['POST'])
 def users():
     if request.method == 'POST':
