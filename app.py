@@ -166,9 +166,7 @@ def receiver():
 @login_required
 def dashboard():
     user_karma = db.users.find_one({'email': session['email']})['karma']
-    return render_template('dashboard.html',
-                           first_name=session['first name'],
-                           karma=user_karma)
+    return render_template('dashboard.html', karma=user_karma)
 
 
 @app.route('/minesweeper')

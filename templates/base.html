@@ -67,20 +67,6 @@
 			color: white;
 			background-color: black;
 		}
-		.intro-section {
-			text-align: center;
-			padding-top: 11.5%;
-		}
-		.intro-section h1 {
-			font-size: 4rem;
-			font-weight: 700;
-			line-height: 1.2;
-			margin-bottom: 1rem;
-		}
-		.intro-section p {
-			font-size: 1.2rem;
-			margin-bottom: 2rem;
-		}
 		.btn-main {
 			background-color: rgb(111, 255, 0);
 			color: #333;
@@ -104,7 +90,7 @@
 
 </head>
 <body class="bg-dark">
-<nav class="navbar navbar-expand-lg">
+<nav class="navbar navbar-expand-lg fixed-top">
 	<div class="container-fluid">
 		<a class="navbar-brand" href="{{url_for('home')}}">EARTHKARMA</a>
 		<div class="collapse navbar-collapse" id="navbarNav">
@@ -121,6 +107,7 @@
 				<li class="nav-item">
 					<a class="nav-link" href="{{url_for('poster')}}">Report pollution</a>
 				</li>
+<!--			Show logged out button if logged in, otherwise show -->
 				{% if 'email' in session.keys() %}
 				<li class="nav-item">
 					<a class="nav-link btn-danger px-3" href="{{url_for('logout')}}">Log out</a>
@@ -137,7 +124,7 @@
 		</div>
 	</div>
 </nav>
-
+<br><br><br>
 {% block content %}
 {% endblock %}
 
