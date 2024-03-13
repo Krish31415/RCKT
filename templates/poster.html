@@ -12,9 +12,7 @@
 		height: 100%;
 		width: 20%;
 		float: right;
-		padding: 10px;
 		box-sizing: border-box;
-		background-color: #232323;
 		display: none;
 	}
 	html, body {
@@ -22,21 +20,7 @@
 		margin: 0;
 		padding: 0;
 	}
-	h3 {
-		padding-top: 150px;
-		text-align: left;
-		padding-left: 25px;
-		color: white;
-		font-family: sans-serif;
-	}
-	p {
-		text-align: left;
-		padding-left: 25px;
-		color: white;
-		font-family: sans-serif;
-	}
 	button {
-		margin-left: 20px;
 		background-color: rgb(111, 255, 0);
 		color: #333;
 		border-radius: 30px;
@@ -50,42 +34,20 @@
 		align-items: center;
 		justify-content: center;
 		padding: 3vmax;
-		background-color: black;
 	}
-	#imageUpload {
-		margin-left: 25px;
-		color: white;
-	}
-	#userText {
-		margin-bottom: 20px;
-		margin-left: 25px;
-		border-radius: 5px;
-	}
-	.navbar {
-		background: none;
-		width: 100%;
-		position: absolute;
-		top: 0;
-		left: 0;
-	}
-	p {
-		font-size: 45px;
-		margin: 20px 0 0;
-		margin-bottom: 140px;
-	} */
 </style>
 {% endblock %}
 
 {% block content %}
 <div id="map" class="mt-4"></div>
-<form method="POST" id="sidebar">
-	<h3>Location Details</h3>
+<form method="POST" id="sidebar" class="text-white mt-5 mx-3">
+	<h3 class="my-auto">Location Details</h3>
 	<p id="locationInfo"></p>
-	<input type="file" name="image" id="imageUpload" accept="image/*">
-	<input type="text" name="description" id="userText" placeholder="Enter the description" style->
+	<input type="file" class="form-control mb-2" name="image" id="imageUpload" accept="image/*">
+	<input type="text" class="form-control mb-2" name="description" id="userText" placeholder="Description" >
 	<button onclick="confirmLocation()">Confirm Location</button>
 
-	<input type="hidden" id="pos_d" name="pos">
+	<input hidden id="pos_d" name="pos">
 </form>
 <script>
 	let currentMarker = null;
