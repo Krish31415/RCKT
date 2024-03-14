@@ -40,7 +40,7 @@ db = client.wasteland
 app.config['SESSION_MONGODB'] = client
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         post_data = request.form.to_dict(flat=True)
@@ -109,7 +109,7 @@ def logout():
     return redirect(url_for('login'))
 
 
-@app.route('/home')
+@app.route('/')
 def home():
     try:
         ip = request.headers['X-Forwarded-For'].split(',')[0]
@@ -127,19 +127,16 @@ def about_us():
 
 # POSTER
 @app.route('/poster', methods=['GET', 'POST'])
+@login_required
 def poster():
     if request.method == 'POST':
         print('recieved data')
-        post_data = request.form.to_dict(flat=True)
-        if not session['email']:
-            flash('You must be logged in to submit a post.')
-            return redirect(url_for('login'))
+        post_data: dict = request.form.to_dict(flat=True)
 
         post_data['user email'] = session['email']
 
-        pos = post_data['pos'].split(', ')
-        post_data['lat'] = float(pos[0][1:])
-        post_data['lng'] = float(pos[1][:-1])
+        # Convert string of tuple of pos into latitude and longitude variables
+        post_data['lat'],post_data['lng'] = json.loads(post_data['pos'])
         del post_data['pos']
         db.reports.insert_one(post_data)
 
