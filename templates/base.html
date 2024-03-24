@@ -14,6 +14,10 @@
 	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 
 	<title>EarthKarma</title>
+	<link rel="apple-touch-icon" sizes="180x180" href="{{url_for('static', filename='/Logo/apple-touch-icon.png')}}">
+	<link rel="icon" type="image/png" sizes="32x32" href="{{url_for('static', filename='/Logo/favicon-32x32.png')}}">
+	<link rel="icon" type="image/png" sizes="16x16" href="{{url_for('static', filename='/Logo/favicon-16x16.png')}}">
+	<link rel="manifest" href="{{url_for('static', filename='/Logo/site.webmanifest')}}">
 	<style>
 		body {
             font-family: 'Montserrat', sans-serif;
@@ -107,7 +111,7 @@
 				<li class="nav-item">
 					<a class="nav-link" href="{{url_for('poster')}}">Report pollution</a>
 				</li>
-<!--			Show logged out button if logged in, otherwise show -->
+				<!--			Show logged out button if logged in, otherwise show -->
 				{% if 'email' in session.keys() %}
 				<li class="nav-item">
 					<a class="nav-link btn-danger px-3" href="{{url_for('logout')}}">Log out</a>
