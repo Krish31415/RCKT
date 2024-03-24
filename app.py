@@ -48,10 +48,8 @@ def login():
             user = db.users.find_one({'email': post_data['email']})
             if user:
                 if sha256_crypt.verify(post_data['password'], user['password']):
-                    print('success')
                     session['email'] = user['email']
                     session['first name'] = user['first name']
-                    session.permament = True
                     return redirect(url_for('home'))
                 else:
                     flash('Password is incorrect')
@@ -86,6 +84,8 @@ def login():
         return redirect(url_for('login'))
 
     if request.method == 'GET':
+        if 'email' in session.keys():
+            return redirect(url_for('dashboard'))
         return render_template('login.html')
 
 
@@ -111,12 +111,6 @@ def logout():
 
 @app.route('/')
 def home():
-    try:
-        ip = request.headers['X-Forwarded-For'].split(',')[0]
-        if ip not in [a['ip'] for a in db.ips.find()]:
-            db.ips.insert_one({'ip': ip, 'time': datetime.now()})
-    except:
-        print('website running locally')
     return render_template('home.html')
 
 
@@ -169,24 +163,6 @@ def dashboard():
 @app.route('/minesweeper')
 def minesweeper():
     return render_template('minesweeper.html')
-
-
-@app.route('/admin/users', methods=['POST'])
-def users():
-    if request.method == 'POST':
-        post_data = request.get_json()
-        print(post_data)
-
-        user = db.users.find_one({'email': post_data['email']})
-        if user:
-            if sha256_crypt.verify(post_data['password'], user['password']):
-                print('success')
-                access_token = create_access_token(identity=user['email'])
-                return jsonify({'message': 'Valid', 'jwt': access_token}), 200
-            else:
-                return jsonify({'message': 'Password is incorrect'}), 401
-        else:
-            return jsonify({'message': 'Email not found'}), 401
 
 
 if __name__ == '__main__':
