@@ -11,6 +11,7 @@
 	#sidebar {
 		height: 100%;
 		width: 20%;
+		max-width: 260px;
 		float: right;
 		box-sizing: border-box;
 		display: none;
@@ -21,10 +22,10 @@
 		padding: 0;
 	}
 	.btn {
-		background-color: rgb(111, 255, 0);
+		background-color: #0F0;
 	}
 	.btn:hover {
-		background-color: rgb(50, 180, 0);
+		background-color: #0b4;
 	}
 	body {
 		display: flex;
@@ -37,16 +38,18 @@
 
 {% block content %}
 <div id="map" class="mt-4"></div>
-<form method="POST" id="sidebar" class="text-white mt-4 mx-3">
+<form method="POST" id="sidebar" class="text-white mt-4 mx-3" enctype='multipart/form-data'>
 	<h3 class="my-2"><strong>Location Details</strong></h3>
 	<p id="latitude" class="mb-1"></p>
 	<p id="longitude"></p>
-	<input type="file" class="form-control mb-2 " name="image" id="imageUpload" accept="image/*">
-	<input type="text" class="form-control mb-2" name="description" id="userText" placeholder="Description" >
+	<img id="test">
+	<input type="file" class="form-control mb-2" onchange="convertImage()" id="imageUpload" accept=".jpg,.jpeg" required>
+	<input type="text" class="form-control mb-2" name="description" id="userText" placeholder="Description" required>
 	<div class="d-grid justify-content-center">
-		<button onclick="confirmLocation()" class="btn">Confirm Location</button>
+		<button onclick="submitReport()" class="btn">Submit report!</button>
 	</div>
 	<input hidden id="pos_d" name="pos">
+	<input hidden id="true image" name="image">
 </form>
 <script>
 	let currentMarker = null;
@@ -180,7 +183,7 @@
 		document.getElementById('map').style.width = '80%';
 	}
 
-	function confirmLocation() {
+	function submitReport() {
 		var pos_d = currentMarker.getPosition().toString();
 		var userText_d = document.getElementById('userText').value;
 		var image_d = document.getElementById('imageUpload').files[0];
@@ -200,6 +203,12 @@
 	}
 
 	window.initMap = initMap;
+
+	function convertImage(){
+		let image = document.getElementById('imageUpload').files[0];
+		let testElement = document.getElementById('test');
+		testElement.src = image.name
+	}
 </script>
 <script async defer
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCuys5rRtnQNo3_YUCqb6g6vOhigb1J53s&callback=initMap">

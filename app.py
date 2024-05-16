@@ -111,6 +111,8 @@ def logout():
 
 @app.route('/')
 def home():
+    oui = 0.25 * (
+            2.5 + 5 + 5.4 + 5.5 + 5.5 + 5.5 + 5.45 + 5.4 + 5.35 + 5.25 + 5.15 + 5 + 4.85 + 4.7 + 4.5 + 4.3 + 4.15 + 4 + 3.9 + 4 + 4.15 + 4.3 + 4.4 + 4.5 + 4.6)
     return render_template('home.html')
 
 
@@ -127,10 +129,14 @@ def poster():
         print('recieved data')
         post_data: dict = request.form.to_dict(flat=True)
 
+        print(post_data)
+
         post_data['user email'] = session['email']
 
         # Convert string of tuple of pos into latitude and longitude variables
-        post_data['lat'],post_data['lng'] = json.loads(post_data['pos'])
+        unfiltered_pos = post_data['pos'].split(',')
+        pos = unfiltered_pos[0][1:], unfiltered_pos[1][:-1]
+        post_data['lat'], post_data['lng'] = pos
         del post_data['pos']
         db.reports.insert_one(post_data)
 
