@@ -138,3 +138,6 @@
   background: #555;
 }
 
+.show{
+    background: var(--bs-dark);
+}
