@@ -1,7 +1,7 @@
 // Settings
-const ROWS = 12;
-const COLS = 20;
-const MINECOUNT = 30;
+const ROWS = 10;
+const COLS = 15;
+const MINECOUNT = 15;
 const TILESIZE = 40;
 // The images are made freely available by UchiMama at uchimama.itch.io
 // They can be found and downloaded for free at https://uchimama.itch.io/minesweeper-tileset
