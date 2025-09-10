@@ -111,8 +111,6 @@ def logout():
 
 @app.route('/')
 def home():
-    oui = 0.25 * (
-            2.5 + 5 + 5.4 + 5.5 + 5.5 + 5.5 + 5.45 + 5.4 + 5.35 + 5.25 + 5.15 + 5 + 4.85 + 4.7 + 4.5 + 4.3 + 4.15 + 4 + 3.9 + 4 + 4.15 + 4.3 + 4.4 + 4.5 + 4.6)
     return render_template('home.html')
 
 
@@ -129,8 +127,6 @@ def poster():
         print('recieved data')
         post_data: dict = request.form.to_dict(flat=True)
 
-        print(post_data)
-
         post_data['user email'] = session['email']
 
         # Convert string of tuple of pos into latitude and longitude variables
@@ -145,6 +141,8 @@ def poster():
             {'email': session['email']},
             {'$inc': {'karma': 1}}
         )
+
+        # TODO: add image upload: image is stored as request.files['image']
 
         return redirect(url_for('dashboard'))
 

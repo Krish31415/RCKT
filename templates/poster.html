@@ -42,8 +42,8 @@
 	<h3 class="my-2"><strong>Location Details</strong></h3>
 	<p id="latitude" class="mb-1"></p>
 	<p id="longitude"></p>
-	<img id="test">
-	<input type="file" class="form-control mb-2" onchange="convertImage()" id="imageUpload" accept=".jpg,.jpeg" required>
+	<img src="" id="test">
+	<input type="file" class="form-control mb-2" name="image"onchange="convertImage()" id="imageUpload" accept="image/*" required>
 	<input type="text" class="form-control mb-2" name="description" id="userText" placeholder="Description" required>
 	<div class="d-grid justify-content-center">
 		<button onclick="submitReport()" class="btn">Submit report!</button>
