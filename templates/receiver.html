@@ -40,18 +40,12 @@
 	]
 
 	function initMap() {
-	  if (navigator.geolocation) {
-		navigator.geolocation.getCurrentPosition(
-		  function (position) {
-			const pos = {
-			  lat: position.coords.latitude,
-			  lng: position.coords.longitude,
-			};
+	  const defaultPos = { lat: 39.8283, lng: -98.5795 };
 
-			map = new google.maps.Map(document.getElementById("map"), {
-			  center: pos,
-			  zoom: 16,
-			  styles: [
+	  map = new google.maps.Map(document.getElementById("map"), {
+		center: defaultPos,
+		zoom: 4,
+		styles: [
 				{ elementType: "geometry", stylers: [{ color: "#1A2636" }] },
 				{
 				  elementType: "labels.text.stroke",
@@ -131,38 +125,47 @@
 				  elementType: "labels.text.fill",
 				  stylers: [{ color: "#515c6d" }],
 				},
-				{
-				  featureType: "water",
-				  elementType: "labels.text.stroke",
-				  stylers: [{ color: "#07080C" }],
-				},
-			  ],
-			});
+		{
+		  featureType: "water",
+		  elementType: "labels.text.stroke",
+		  stylers: [{ color: "#07080C" }],
+		},
+	  ],
+	});
 
-			const infowindow = new google.maps.InfoWindow();
+	const infowindow = new google.maps.InfoWindow();
 
-			markedLocations.forEach((location) => {
-			  const marker = new google.maps.Marker({
-				position: { lat: location.lat, lng: location.lng },
-				map: map,
-				title: location.caption,
-				icon: "{{url_for('static',filename='pin.png')}}",
-			  });
+	markedLocations.forEach((location) => {
+	  const marker = new google.maps.Marker({
+		position: { lat: location.lat, lng: location.lng },
+		map: map,
+		title: location.caption,
+		icon: "{{url_for('static',filename='pin.png')}}",
+	  });
 
-			  marker.addListener("click", () => {
-				infowindow.setContent(location.caption);
-				infowindow.open(map, marker);
-			  });
-			});
-		  },
-		  function () {
-			handleLocationError(true, map.getCenter());
-		  }
-		);
-	  } else {
-		handleLocationError(false, map.getCenter());
-	  }
+	  marker.addListener("click", () => {
+		infowindow.setContent(location.caption);
+		infowindow.open(map, marker);
+	  });
+	});
+
+	if (navigator.geolocation) {
+	  navigator.geolocation.getCurrentPosition(
+		function (position) {
+		  map.setCenter({
+			lat: position.coords.latitude,
+			lng: position.coords.longitude,
+		  });
+		  map.setZoom(16);
+		},
+		function () {
+		  handleLocationError(true, map.getCenter());
+		}
+	  );
+	} else {
+	  handleLocationError(false, map.getCenter());
 	}
+  }
 
 	function handleLocationError(browserHasGeolocation, pos) {
 	  console.error(
